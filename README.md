@@ -19,8 +19,7 @@ La versión inicial que se presenta (0.1.0) contiene el diseño original del mod
 3. [Creación de la base de datos y las tablas](#3)
 4. [Ejecución](#4)
 5. [Funcionamiento](#5)
-6. [Funciones en desarrollo](#6)
-7. [Lista de cambios](#7)
+6. [Funciones en desarrollo / cambios](#6)
 
 ### <a name="1"></a>Estructura del programa
 
@@ -111,7 +110,7 @@ private Connection conectar() {
 
 Para una correcta y más fácil ejecución de la aplicación contamos con dos opciones: el uso de un entorno de desarrollo integrado o IDE, que es el que recomiendo por comodidad, o la compilación a través de consola.
 
-###### Ejecución a través de un IDE
+##### Ejecución a través de un IDE
 
 Para ejecutar el programa a través de un IDE, primero tenemos que descargarlo e instalarlo en el sistema. Por su facilidad de uso y por ser aquél en el que está desarrollado el programa, recomiendo usar **_Eclipse_**. Está disponible para descarga para los principales sistemas (Windows, Linux, MacOS) en el siguiente enlace:
 
@@ -131,7 +130,7 @@ package compra;
 
 Por último, sólo tendremos que ejecutar la clase ejecutable **Compra()**, que es la que contiene el método _main_ que llama al resto de clases y métodos.
 
-###### Ejecución a través de consola
+##### Ejecución a través de consola
 
 Dentro de la carpeta en la que hemos clonado o descargado los archivos del repositorio, ejecutamos el compilador de Java (javac):
 
