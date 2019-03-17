@@ -1,3 +1,5 @@
+package com.tienda.model;
+
 public class Cliente {
 	
 	private String dni;

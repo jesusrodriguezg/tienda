@@ -1,3 +1,5 @@
+package com.tienda.model;
+
 public class Producto {
 	
 	private int idprod;

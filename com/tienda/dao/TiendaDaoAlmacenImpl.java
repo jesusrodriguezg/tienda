@@ -1,56 +1,29 @@
-import java.sql.Statement;
+package com.tienda.dao;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import com.tienda.client.PedirDatos;
+import com.tienda.model.Producto;
 
-public class Almacen {
-	
+public class TiendaDaoAlmacenImpl implements TiendaDaoAlmacen{
 	private Connection conn=null;
 	
-	public void menu(Connection conn) {
-		this.conn=conn;
-		int opcion=0;
-		do {
-			mostrarMenu();
-			opcion=PedirDatos.leerEntero("Elija una opción:");
-			switch (opcion) {
-			case 1:
-				addProducto();
-				break;
-			case 2:
-				setPrecioProducto();
-				break;
-			case 3:
-				delProducto();
-				break;
-			case 4:
-				mostrarProducto();
-				break;
-			case 5:
-				listProductos();
-				break;
-			case 0:
-				System.out.println("Volviendo al menú principal...");
-				break;
-			default:
-				System.out.println("Debe introducir una opción entre 0 y 5.");
-				break;
-			}
-		} while (opcion!=0);
-	}
-
-	private void addProducto() {
+	@Override
+	public void add() {
 		//pedimos el número de serie del producto
 		int id=PedirDatos.leerEntero("Introduzca el código del producto que desea añadir:");
 		//comprobamos que no existe en la BD un producto con el mismo ID
-		if (searchProductoID(id)) {
+		if (searchProductoId(id)) {
 			char opcion=' ';
 			boolean seguir=true;
 			//Si existe, damos la opción de añadir más unidades
 			do {
 				opcion=PedirDatos.leerCaracter("El producto con el ID "+id+" ya existe. ¿Quiere añadir unidades al almacén? (S/N)");
+				char op=Character.toUpperCase(opcion);
 				//mediante un bucle y un switch case controlamos la opción decidida por el usuario como si fuera un menú
-				switch (opcion) {
+				switch (op) {
 				case 'S':
 					//pedimos la cantidad que se desea introducir
 					int cant=PedirDatos.leerEntero("Introduzca la cantidad de unidades que desea añadir:");
@@ -141,12 +114,16 @@ public class Almacen {
 		}
 	}
 	
-	//método que sustituye al modificarProducto(), ya que el IDPROD y el NOMPROD son campos que no deben modificarse
-	private void setPrecioProducto() {
+	/*
+	 * método que sustituye al modificarProducto(), ya que el IDPROD y el NOMPROD son campos que no deben modificarse
+	 * @see DAO.InterfazDaoAlmacen#setPrecioProducto()
+	 */
+	@Override
+	public void setPrecioProducto() {
 		//pedimos el IDPROD del producto cuyo precio deseamos modificar
 		int id=PedirDatos.leerEntero("Introduzca el código del producto cuyo precio desea modificar:");
 		//comprobamos si existe dicho producto en la BD
-		if (!searchProductoID(id)) {
+		if (!searchProductoId(id)) {
 			System.out.println("No existe ningún producto con el código "+id+".");
 			return;
 		}
@@ -181,11 +158,13 @@ public class Almacen {
 		}
 	}
 
-	private void delProducto() {
+
+	@Override
+	public void del() {
 		//pedimos el código del producto que deseamos eliminar
 		int id=PedirDatos.leerEntero("Introduzca el código del producto que desea borrar:");
 		//comprobamos que exite el producto con dicho IDPROD
-		if (!searchProductoID(id)) {
+		if (!searchProductoId(id)) {
 			System.out.println("No existe ningún producto con el código "+id+".");
 			return;
 		}
@@ -205,12 +184,13 @@ public class Almacen {
 			System.out.println(sqle.getMessage());
 		}
 	}
-	
-	private void mostrarProducto() {
+
+	@Override
+	public void mostrar() {
 		//pedimos el IDPROD del producto que queremos mostrar
 		int id=PedirDatos.leerEntero("Introduzca el código del producto que desea mostrar:");
 		//comprobamos que exite el producto con dicho IDPROD
-		if (!searchProductoID(id)) {
+		if (!searchProductoId(id)) {
 			System.out.println("No existe ningún producto con el código "+id+".");
 			return;
 		}
@@ -235,8 +215,8 @@ public class Almacen {
 		}
 	}
 
-	//método que hace una SELECT de todos los datos de la tabla y los muestra uno tras otro gracias a un bucle
-	private void listProductos() {
+	@Override
+	public void list() {
 		ResultSet rs;
 		try {
 			Statement st=conn.createStatement();
@@ -266,8 +246,9 @@ public class Almacen {
 		}
 	}
 	
-	//método que busca un producto por su IDPROD con un COUNT; si la select devuelve al menos una fila, el método devuelve TRUE
-	private boolean searchProductoID(int id) {
+
+	@Override
+	public boolean searchProductoId(int id) {
 		try {
 			Statement st=conn.createStatement();
 			String sql="SELECT COUNT(*) FROM PRODUCTO WHERE IDPROD="+id;
@@ -286,8 +267,9 @@ public class Almacen {
 		return false;
 	}
 	
-	//método idéntico al anterior, pero que hace la búsqueda por el campo NOMPROD
-	private boolean searchProductoNombre(String nom) {
+
+	@Override
+	public boolean searchProductoNombre(String nom) {
 		try {
 			Statement st=conn.createStatement();
 			String sql="SELECT COUNT(*) FROM PRODUCTO WHERE NOMPROD LIKE '"+nom+"'";
@@ -305,16 +287,9 @@ public class Almacen {
 		}
 		return false;
 	}
-	
-	private void mostrarMenu() {
-		System.out.println("------------------");
-		System.out.println("GESTIÓN DE ALMACÉN");
-		System.out.println("------------------");
-		System.out.println("1. Añadir producto.");
-		System.out.println("2. Modificar precio de un producto.");
-		System.out.println("3. Borrar producto.");
-		System.out.println("4. Mostrar un producto.");
-		System.out.println("5. Listar todos los productos.");
-		System.out.println("0. Volver al menú principal.");		
+	@Override
+	public void setConnection(Connection conn)
+	{
+		this.conn = conn;
 	}
 }

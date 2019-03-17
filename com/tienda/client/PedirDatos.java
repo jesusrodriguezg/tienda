@@ -1,10 +1,12 @@
+package com.tienda.client;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PedirDatos {
 	static private Scanner teclado=new Scanner(System.in);
 
-	static int leerEntero(String frase){
+	public static int leerEntero(String frase){
 		int entero=0;
 		boolean seguir=true;
 		
@@ -21,7 +23,7 @@ public class PedirDatos {
 		return entero;
 	}
 
-	static double leerDouble(String frase) {
+	public static double leerDouble(String frase) {
 		double decimal=0;
 		boolean seguir=true;
 		do {
@@ -38,7 +40,7 @@ public class PedirDatos {
 		return decimal;
 	}
 	
-	static String leerCadena(String frase) {
+	public static String leerCadena(String frase) {
 		String cadena="";
 		
 		System.out.println(frase);
@@ -47,7 +49,7 @@ public class PedirDatos {
 		return cadena;
 	}
 	
-	static char leerCaracter(String frase) {
+	public static char leerCaracter(String frase) {
 		char car;
 		String cadena="";
 		do {
