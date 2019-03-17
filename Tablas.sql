@@ -16,3 +16,22 @@ CREATE TABLE CLIENTE (
     CORREO     VARCHAR (30)
     PRIMARY KEY(DNI,CLIENTE)
 );
+
+CREATE TABLE FACTURA (
+	ID			INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	DNICLI		VARCHAR(9),
+	FECHA		VARCHAR(10),
+	IMPORTE		NUMERIC,
+	CODFACT		VARCHAR(26),
+	foreign key (DNICLI) references CLIENTE (DNI)
+);
+
+CREATE TABLE linea_factura(
+	id		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	id_factura INTEGER NOT NULL,
+	id_producto INTEGER NOT NULL,
+	cantidad INTEGER NOT NULL,
+	precio		NUMERIC NOT NULL,
+	foreign key (id_factura) references compra(ID),
+	foreign key (id_producto) references producto(IDPROD)
+)
