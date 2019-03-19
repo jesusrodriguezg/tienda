@@ -34,4 +34,4 @@ CREATE TABLE linea_factura(
 	precio		NUMERIC NOT NULL,
 	foreign key (id_factura) references compra(ID),
 	foreign key (id_producto) references producto(IDPROD)
-)
+);

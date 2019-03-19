@@ -10,7 +10,7 @@ import com.tienda.model.Cliente;
 
 public class TiendaDaoClienteImpl implements TiendaDaoCliente {
 	
-	private Connection conn=null;
+	private Connection conn;
 
 	@Override
 	public void add() {
